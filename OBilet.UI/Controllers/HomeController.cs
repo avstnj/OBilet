@@ -17,7 +17,7 @@ namespace OBilet.UI.Controllers
             _iOBiletServiceManager = iOBiletServiceManager;
         }
 
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
             return View();
         }
@@ -26,25 +26,24 @@ namespace OBilet.UI.Controllers
         public async Task<JsonResult> GetBusLocations()
         {
             var result = await _iOBiletServiceManager.GetBusLocations(null);
-			if (result.IsSuccess && result.Data != null)
-				return Json(result?.Data?.BusLocationResponseData?.Select(x => new BusInfoResponseData { id = x.Id, name = x.Name }).Take(1000).ToList());
-			else
-				return Json(null);
-		}
-
-        [HttpPost]
-        public async Task<JsonResult> GetBusJourneys(DateTime departureDate, int destinationId, int originId)
-        {
-            var result = await _iOBiletServiceManager.GetBusJourneys(departureDate, destinationId, originId);
-            //if (result.IsSuccess && result.Data != null)
-            //    return Json(result?.Data?.BusLocationResponseData?.Select(x => new BusInfoResponseData { id = x.Id, name = x.Name }).Take(1000).ToList());
-            //else
+            if (result.IsSuccess && result.Data != null)
+                return Json(result?.Data?.BusLocationResponseData?.Select(x => new BusInfoResponseData { id = x.Id, name = x.Name }).Take(500).ToList());
+            else
                 return Json(null);
         }
 
-        public IActionResult Privacy()
+        [HttpPost]
+        public async Task<JsonResult> GetBusJourneys(string departureDate, int destinationId, int originId)
         {
-            return View();
+            DateTime departureDateTime = String.IsNullOrEmpty(departureDate) ? DateTime.Now.Date : 
+                new DateTime(Convert.ToInt32(departureDate.Split('/')[2]), Convert.ToInt32(departureDate.Split('/')[0]), Convert.ToInt32(departureDate.Split('/')[1])).Date;
+
+            var result = await _iOBiletServiceManager.GetBusJourneys(departureDateTime, destinationId, originId);
+
+			if (result.IsSuccess && result.Data != null)
+				return Json(result?.Data?.BusJourneyResponseData?.ToList());
+			else
+				return Json(null);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

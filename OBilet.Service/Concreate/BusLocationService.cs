@@ -30,20 +30,5 @@ namespace OBilet.Service.Concreate
                 return new ResultMessage<GetBusLocationResponseModel> { IsSuccess = false, Message = ex.Message };
             }
         }
-
-        public async Task<ResultMessage<GetBusInfoResponseModel>> GetBusInfo(GetBusLocationRequestModel request)
-        {
-            try
-            {
-                var getSessionUrl = $"{_oBiletApiModel.OBiletApiBaseUrl}{_oBiletApiModel.GetBusLocationsEndPoint}";
-                var datalist = await ApiProcess.PostMetod<GetBusLocationRequestModel, GetBusInfoResponseModel>(getSessionUrl, request, _oBiletApiModel.Token);
-
-                return new ResultMessage<GetBusInfoResponseModel> { Data = datalist, IsSuccess = true, Message = "Başarılı" };
-            }
-            catch (Exception ex)
-            {
-                return new ResultMessage<GetBusInfoResponseModel> { IsSuccess = false, Message = ex.Message };
-            }
-        }
     }
 }

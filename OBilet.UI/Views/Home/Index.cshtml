@@ -44,14 +44,7 @@
                 data: {originId: originId,destinationId: destinationId,departureDate:departureDate},
 				async: true,
 				success: function(result) {
-					var html = '';
-					$.each(result, function(key, value) {
-						html += '<option value=' + value.id + '>' + value.name + '</option>'
-					});
-					$('#originId').html(html);
-					$("#originId").val(349).change();//İstanbul Avrupa
-					$('#destinationId').html(html);
-					$("#destinationId").val(356).change();//Ankara
+
 				},
 				error: function(xhr, textStatus, error) {
 				},

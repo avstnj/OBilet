@@ -35,13 +35,6 @@ namespace OBilet.API.Controllers
             return result;
         }
 
-        [HttpPost("GetBusInfo")]
-        public async Task<ResultMessage<GetBusInfoResponseModel>> GetBusInfo([FromBody] GetBusLocationRequestModel model)
-        {
-            var result = await _busLocationService.GetBusInfo(model);
-            return result;
-        }
-
         [HttpPost("GetBusJourneys")]
         public async Task<ResultMessage<GetBusJourneyResponseModel>> GetBusJourneys([FromBody] GetBusJourneyRequestModel model)
         {
