@@ -6,7 +6,9 @@ namespace OBilet.Domain.Models.GetBusJourney
     public class GetBusJourneyResponseModel
     {
         public string status { get; set; }
-        public List<BusJourneyResponseData> data { get; set; }
+        [JsonProperty("data")]
+        [JsonPropertyName("data")]
+        public List<BusJourneyResponseData> BusJourneyResponseData { get; set; }
         public string message { get; set; }
 
         [JsonProperty("user-message")]

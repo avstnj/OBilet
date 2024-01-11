@@ -14,7 +14,7 @@
 		</select>
 	</div>
 	<div class="form-group">
-		<label for="datepickerId">datepicker</label>
+		<label for="datepickerId">Tarih</label>
 		<input type="text" id="datepickerId">
 	</div>
 	<button type="button" onclick="FindTicket();" class="btn btn-primary">Bilet Bul</button>
@@ -27,9 +27,6 @@
 			$("#originId").select2();
 			$("#destinationId").select2();
 			GetOriginAndDestination();
-			$("#originId").on("keyup", function() {
-			  	console.log("tndsdj", 'tndsdj');
-			});
 		});
 
 		function FindTicket() {
@@ -37,8 +34,30 @@
 			console.log("destinationId", destinationId);
 			var originId = $('#originId').val();
 			console.log("originId", originId);
-			var datepickerId = $('#datepickerId').val();
-			console.log("datepickerId", datepickerId);
+			var departureDate = $('#datepickerId').val();
+			console.log("datepickerId", departureDate);
+
+			var URL = '/Home';
+			$.ajax({
+				url: URL + '/GetBusJourneys',
+				type: 'POST',
+                data: {originId: originId,destinationId: destinationId,departureDate:departureDate},
+				async: true,
+				success: function(result) {
+					var html = '';
+					$.each(result, function(key, value) {
+						html += '<option value=' + value.id + '>' + value.name + '</option>'
+					});
+					$('#originId').html(html);
+					$("#originId").val(349).change();//İstanbul Avrupa
+					$('#destinationId').html(html);
+					$("#destinationId").val(356).change();//Ankara
+				},
+				error: function(xhr, textStatus, error) {
+				},
+				complete: function() {
+				}
+			});
 		}
 
 		function GetOriginAndDestination() {

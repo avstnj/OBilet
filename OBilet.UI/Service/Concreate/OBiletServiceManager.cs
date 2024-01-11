@@ -155,7 +155,7 @@ namespace OBilet.UI.Service.Concreate
                     var getSessionUrl = $"{_oBiletUIConfigurationModel.OBiletApiUrl}{_oBiletUIConfigurationModel.GetBusJourneys}";
                     var datalist = await ApiProcess.PostMetod<GetBusJourneyRequestModel, ResultMessage<GetBusJourneyResponseModel>>(getSessionUrl, getBusJourneyRequestModel);
 
-                    return new ResultMessage<GetBusJourneyResponseModel> { Data = datalist.Data, IsSuccess = true, Message = "Başarılı" };
+                    return new ResultMessage<GetBusJourneyResponseModel> { Data = datalist?.Data, IsSuccess = true, Message = "Başarılı" };
                 }
 
                 return new ResultMessage<GetBusJourneyResponseModel> { IsSuccess = false, Message = session.Message };

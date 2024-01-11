@@ -32,6 +32,16 @@ namespace OBilet.UI.Controllers
 				return Json(null);
 		}
 
+        [HttpPost]
+        public async Task<JsonResult> GetBusJourneys(DateTime departureDate, int destinationId, int originId)
+        {
+            var result = await _iOBiletServiceManager.GetBusJourneys(departureDate, destinationId, originId);
+            //if (result.IsSuccess && result.Data != null)
+            //    return Json(result?.Data?.BusLocationResponseData?.Select(x => new BusInfoResponseData { id = x.Id, name = x.Name }).Take(1000).ToList());
+            //else
+                return Json(null);
+        }
+
         public IActionResult Privacy()
         {
             return View();

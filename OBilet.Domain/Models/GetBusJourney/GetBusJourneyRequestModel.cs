@@ -6,6 +6,8 @@ namespace OBilet.Domain.Models.GetBusJourney
     public class GetBusJourneyRequestModel : BusTrackingBaseModel
     {
         public DateTime date { get; set; }
+        [JsonProperty("data")]
+        [JsonPropertyName("data")]
         public BusJourneyData BusJourneyData { get; set; }
     }
     public class BusJourneyData
